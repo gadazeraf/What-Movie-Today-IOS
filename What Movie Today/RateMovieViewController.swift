@@ -58,6 +58,23 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
                // break
             }
         }
+        
+        designCard(card: card)
+        designCard(card: cardBis)
+    }
+    
+    func designCard(card: Card)
+    {
+        card.layer.cornerRadius = 30
+        card.clipsToBounds = true
+        card.layer.shadowPath =
+            UIBezierPath(roundedRect: card.bounds,
+                         cornerRadius: card.layer.cornerRadius).cgPath
+        card.layer.shadowColor = UIColor.black.cgColor
+        card.layer.shadowOpacity = 0.25
+        card.layer.shadowOffset = CGSize(width: 10, height: 10)
+        card.layer.shadowRadius = 1
+        card.layer.masksToBounds = false
     }
     
     func calculateCard(label: UILabel, img: UIImageView) {
@@ -84,7 +101,8 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
                         let newString = nameb.replacingOccurrences(of: " ", with: "+")
                         let finalString = newString + "+Movie"
                         print("nameb", finalString)
-                        imgRqst = "https://serpapi.com/search.json?q=" + finalString + "&tbm=isch&ijn=0&api_key=0462fb563e312cee95ddd23e393e3d2b05aa12afe21bb4e07779f7c37da03e50"
+                        //imgRqst = "https://serpapi.com/search.json?q=" + finalString + "&tbm=isch&ijn=0&api_key=0462fb563e312cee95ddd23e393e3d2b05aa12afe21bb4e07779f7c37da03e50"
+                        imgRqst = "https://www.omdbapi.com/?t=" + newString + "&apikey=8b28d966"
                         label.text = nameb
                         self.currentMovie = nameb
                         self.popupName.text = nameb
@@ -93,17 +111,17 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
                             {
                                 response in
                                 //printing response
-                                print(response)
+                                print("rsss", response)
                                 
                                 //getting the json value from the server
                                 switch response.result {
                                 case let .success(value):
                                     let jsonData = value as! NSDictionary
-                                    print("json", jsonData.value(forKey: "images_results")!)
-                                    let imgLink = jsonData.value(forKey: "images_results") as! NSArray
-                                    let imgLinked = imgLink[0] as! NSDictionary
-                                    print("json api result", imgLinked.value(forKey: "original")!)
-                                    img.download(string: imgLinked.value(forKey: "original") as! String)
+                                    print("json", jsonData.value(forKey: "Poster")!)
+                                   // let imgLink = jsonData.value(forKey: "poster") as! NSArray
+                                    //let imgLinked = imgLink[0] as! NSDictionary
+                                    //print("json api result", imgLinked.value(forKey: "original")!)
+                                    img.download(string: jsonData.value(forKey: "Poster") as! String)
                                     //self.popupImg.download(string: imgLinked.value(forKey: "original") as! String)
                                     //let data = jsonData[0] as! NSDictionary
                                     //print("json", data.value(forKey: "Name")!)

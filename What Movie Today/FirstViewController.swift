@@ -33,8 +33,14 @@ class FirstViewController: UIViewController {
             "password":textFieldPassword.text!
         ]
         
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            //"X-CSRFToken": xsrfCookie!.value,
+            "Referer": "https://what-movie-today-for-ios.herokuapp.com/api/v1/rest-auth/login"
+        ]
+        
         //making a post request
-        AF.request(URL_USER_LOGIN, method: .post, parameters: parameters).responseJSON
+        AF.request(URL_USER_LOGIN, method: .post, parameters: parameters, headers: headers).responseJSON
             {
                 response in
                 //printing response
@@ -84,6 +90,7 @@ class FirstViewController: UIViewController {
                         self.navigationController?.pushViewController(RateMovieViewController, animated: true)
                         
                         self.dismiss(animated: false, completion: nil)
+                    print("default", self.defaultValues)
                     
                    // }
                 case .failure(_):

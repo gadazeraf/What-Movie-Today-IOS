@@ -22,9 +22,10 @@ class SecondViewController: UIViewController {
         
         let headers: HTTPHeaders = [
             "Content-Type": "application/json",
-            "X-CSRFToken": xsrfCookie!.value
+            "X-CSRFToken": xsrfCookie!.value,
+            "Referer": "https://what-movie-today-for-ios.herokuapp.com/api/v1/movies/"
         ]
-        AF.request("http://127.0.0.1:8000/api/v1/rest-auth/logout/", method: .post, headers: headers).responseString { (response) in
+        AF.request("https://what-movie-today-for-ios.herokuapp.com/api/v1/rest-auth/logout/", method: .post, headers: headers).responseString { (response) in
             print("response", response)
         }
         //switching to login screen
