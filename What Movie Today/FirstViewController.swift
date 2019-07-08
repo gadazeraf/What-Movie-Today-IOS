@@ -17,15 +17,10 @@ class FirstViewController: UIViewController {
     
     @IBOutlet weak var errorLabel: UILabel!
     
-    //The login script url make sure to write the ip instead of localhost
-    //you can get the ip using ifconfig command in terminal
     let URL_USER_LOGIN = "https://what-movie-today-for-ios.herokuapp.com/api/v1/rest-auth/login/"
     
-    //the defaultvalues to store user data
     let defaultValues = UserDefaults.standard
     
-    //the connected views
-    //don't copy instead connect the views using assistant editor
     @IBOutlet weak var labelMessage: UILabel!
     @IBOutlet weak var textFieldUserName: UITextField!
     @IBOutlet weak var textFieldPassword: UITextField!
@@ -33,20 +28,8 @@ class FirstViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //hiding the navigation button
-        let backButton = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: navigationController, action: nil)
-        navigationItem.leftBarButtonItem = backButton
         
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        //if user is already logged in switching to profile screen
-        if defaultValues.string(forKey: "username") != nil{
-            let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewcontroller") as! ProfileViewController
-            self.navigationController?.pushViewController(profileViewController, animated: true)
-            
-        }
         let sharedCookieStorage = HTTPCookieStorage.shared
-        
         for cookie in sharedCookieStorage.cookies! {
             print("cookie", cookie.value)
             if cookie.name == "csrftoken" { cxsrfCookie = cookie
@@ -61,26 +44,39 @@ class FirstViewController: UIViewController {
     }
     
     
+    @IBAction func buttonSignUp(_ sender: Any) {
+        let SignUpViewController = self.storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
+        self.present(SignUpViewController, animated: true, completion: nil)
+    }
+    
+    override open var shouldAutorotate: Bool {
+        return false
+    }
     
     //the button action function
     @IBAction func buttonLogin(_ sender: UIButton) {
-        
+
         //getting the username and password
         let parameters: Parameters=[
             "username":textFieldUserName.text!,
             "password":textFieldPassword.text!
         ]
         
+        var token = ""
+        if let cookie = cxsrfCookie {
+            token = cookie.value
+        }
+        
         let headers: HTTPHeaders = [
             "Content-Type": "application/json",
-            "X-CSRFToken": cxsrfCookie!.value,
+            "X-CSRFToken": token,
             "Referer": "https://what-movie-today-for-ios.herokuapp.com/api/v1/rest-auth/login"
         ]
         
         //making a post request
-        let activityIndicator = UIActivityIndicatorView(style: .gray) // Create the activity indicator
-        view.addSubview(activityIndicator) // add it as a  subview
-        activityIndicator.center = CGPoint(x: view.frame.size.width*0.5, y: view.frame.size.height*0.5) // put in the middle
+        let activityIndicator = UIActivityIndicatorView(style: .gray)
+        view.addSubview(activityIndicator)
+        activityIndicator.center = CGPoint(x: view.frame.size.width*0.5, y: view.frame.size.height*0.5)
         activityIndicator.startAnimating()
         AF.request(URL_USER_LOGIN, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON
             {
@@ -96,37 +92,23 @@ class FirstViewController: UIViewController {
                         
                         //switching the screen
                         let RateMovieViewController = self.storyboard?.instantiateViewController(withIdentifier: "RateMovieViewController") as! RateMovieViewController
-                        //self.navigationController?.pushViewController(RateMovieViewController, animated: true)
                         self.present(RateMovieViewController, animated: true, completion: nil)
-                        
-                        //self.dismiss(animated: false, completion: nil)
                     }
                     else {
                         self.errorLabel.alpha = 1
                     }
-                    
-                // }
                 case .failure(_):
                     //error message in case of invalid credential
-                    //self.labelMessage.text = "Invalid username or password"
-                    print("error")
+                    print("error credentials")
                 }
                 activityIndicator.stopAnimating()
         }
     }
     
     
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
 }
 

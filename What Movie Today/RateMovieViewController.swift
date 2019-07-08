@@ -40,15 +40,10 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Mark - hide back button
-        let backButton = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: navigationController, action: nil)
-        navigationItem.leftBarButtonItem = backButton
         
         divisor = (view.frame.width / 2) / 0.61
         calculateCard(label: cardLabel, img: imgCard)
         cardBis.alpha = 0
-        // Do any additional setup after loading the view.
-        print("sizeA", popupStack.frame.height)
         let sharedCookieStorage = HTTPCookieStorage.shared
         
         for cookie in sharedCookieStorage.cookies! {
@@ -75,21 +70,24 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
         card.layer.shadowOffset = CGSize(width: 10, height: 10)
         card.layer.shadowRadius = 1
         card.layer.masksToBounds = false
+        
+        self.imgCard.layer.cornerRadius = 30
+        self.imgCardBis.layer.cornerRadius = 30
+        
+        self.popupView.layer.cornerRadius = 30
     }
     
     func calculateCard(label: UILabel, img: UIImageView) {
         var imgRqst : String?
-        let activityIndicator = UIActivityIndicatorView(style: .gray) // Create the activity indicator
-        view.addSubview(activityIndicator) // add it as a  subview
-        activityIndicator.center = CGPoint(x: view.frame.size.width*0.5, y: view.frame.size.height*0.5) // put in the middle
+        let activityIndicator = UIActivityIndicatorView(style: .gray)
+        view.addSubview(activityIndicator)
+        activityIndicator.center = CGPoint(x: view.frame.size.width*0.5, y: view.frame.size.height*0.5)
         activityIndicator.startAnimating()
         AF.request("https://what-movie-today-for-ios.herokuapp.com/api/v1/newmovies/most", method: .get).responseJSON
             {
                 response in
-                //printing response
                 print(response)
                 
-                //getting the json value from the server
                 switch response.result {
                 case let .success(value):
                     let jsonData = value as! NSArray
@@ -110,30 +108,21 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
                         AF.request(imgRqst!, method: .get).responseJSON
                             {
                                 response in
-                                //printing response
-                                print("rsss", response)
+
+                                print("GETIMG", response)
                                 
-                                //getting the json value from the server
                                 switch response.result {
                                 case let .success(value):
                                     let jsonData = value as! NSDictionary
-                                    // let imgLink = jsonData.value(forKey: "poster") as! NSArray
-                                    //let imgLinked = imgLink[0] as! NSDictionary
-                                    //print("json api result", imgLinked.value(forKey: "original")!)
                                     if let imgLink = jsonData.value(forKey: "Poster") {
                                         print("json", imgLink)
                                         img.download(string: imgLink as! String)
                                     }
-                                    //self.popupImg.download(string: imgLinked.value(forKey: "original") as! String)
-                                    //let data = jsonData[0] as! NSDictionary
-                                //print("json", data.value(forKey: "Name")!)
                                 case .failure(_):
-                                    //error message in case of invalid credential
-                                    label.text = "Error api google"
+                                    print("image search error occured")
                                 }
                                 if let teaser = data.value(forKey: "wTeaser") {
-                                    self.popupTeaser.text = teaser as! String
-                                    print("teaser", self.popupTeaser.text as! String)
+                                    self.popupTeaser.text = teaser as? String ?? ""
                                 }
                                 if let yID = data.value(forKey: "yID") {
                                     let id = yID as! String
@@ -141,20 +130,14 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
                                     self.popupYT.load(withVideoId: id)
                                     
                                 }
-                                print("sizeB", self.popupStack.frame.height)
                                 self.popupView.updateContentView()
                                 activityIndicator.stopAnimating()
                         }
-                        
-                        
                     }
                 case .failure(_):
-                    //error message in case of invalid credential
                     label.text = "Invalid username or password"
                 }
         }
-        
-        
     }
     
     
@@ -278,6 +261,10 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
         let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "ViewController") as! UIViewController
         self.navigationController?.pushViewController(loginViewController, animated: true)
         self.dismiss(animated: false, completion: nil)
+    }
+    
+    override open var shouldAutorotate: Bool {
+        return false
     }
     
 }

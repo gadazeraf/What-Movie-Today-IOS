@@ -7,28 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A23276422D3CE5B00314488 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A23276322D3CE5B00314488 /* SignUpViewController.swift */; };
 		0A99A42C22CFB16700184085 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A99A42B22CFB16700184085 /* AppDelegate.swift */; };
 		0A99A42E22CFB16700184085 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A99A42D22CFB16700184085 /* FirstViewController.swift */; };
-		0A99A43022CFB16700184085 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A99A42F22CFB16700184085 /* SecondViewController.swift */; };
 		0A99A43322CFB16700184085 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A99A43122CFB16700184085 /* Main.storyboard */; };
 		0A99A43522CFB16800184085 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A99A43422CFB16800184085 /* Assets.xcassets */; };
 		0A99A43822CFB16800184085 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A99A43622CFB16800184085 /* LaunchScreen.storyboard */; };
-		0A99A44022CFB47800184085 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A99A43F22CFB47800184085 /* ProfileViewController.swift */; };
 		0A99A44222CFC42600184085 /* RateMovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A99A44122CFC42600184085 /* RateMovieViewController.swift */; };
 		0A99A44622CFC4CF00184085 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A99A44522CFC4CF00184085 /* Card.swift */; };
 		457F3CCE14D00D5EFCCD9055 /* Pods_What_Movie_Today.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4977C07701AD9DA50A19B0EE /* Pods_What_Movie_Today.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A23276322D3CE5B00314488 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		0A99A42822CFB16700184085 /* What Movie Today.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "What Movie Today.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A99A42B22CFB16700184085 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A99A42D22CFB16700184085 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		0A99A42F22CFB16700184085 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		0A99A43222CFB16700184085 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0A99A43422CFB16800184085 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0A99A43722CFB16800184085 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0A99A43922CFB16800184085 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0A99A43F22CFB47800184085 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		0A99A44122CFC42600184085 /* RateMovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateMovieViewController.swift; sourceTree = "<group>"; };
 		0A99A44522CFC4CF00184085 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		44408CAADEB078F848D34FE4 /* Pods-What Movie Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-What Movie Today.debug.xcconfig"; path = "Target Support Files/Pods-What Movie Today/Pods-What Movie Today.debug.xcconfig"; sourceTree = "<group>"; };
@@ -80,14 +78,13 @@
 			children = (
 				0A99A42B22CFB16700184085 /* AppDelegate.swift */,
 				0A99A42D22CFB16700184085 /* FirstViewController.swift */,
-				0A99A42F22CFB16700184085 /* SecondViewController.swift */,
 				0A99A43122CFB16700184085 /* Main.storyboard */,
 				0A99A43422CFB16800184085 /* Assets.xcassets */,
 				0A99A43622CFB16800184085 /* LaunchScreen.storyboard */,
 				0A99A43922CFB16800184085 /* Info.plist */,
-				0A99A43F22CFB47800184085 /* ProfileViewController.swift */,
 				0A99A44122CFC42600184085 /* RateMovieViewController.swift */,
 				0A99A44522CFC4CF00184085 /* Card.swift */,
+				0A23276322D3CE5B00314488 /* SignUpViewController.swift */,
 			);
 			path = "What Movie Today";
 			sourceTree = "<group>";
@@ -224,11 +221,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A99A43022CFB16700184085 /* SecondViewController.swift in Sources */,
+				0A23276422D3CE5B00314488 /* SignUpViewController.swift in Sources */,
 				0A99A44622CFC4CF00184085 /* Card.swift in Sources */,
 				0A99A42C22CFB16700184085 /* AppDelegate.swift in Sources */,
 				0A99A44222CFC42600184085 /* RateMovieViewController.swift in Sources */,
-				0A99A44022CFB47800184085 /* ProfileViewController.swift in Sources */,
 				0A99A42E22CFB16700184085 /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
