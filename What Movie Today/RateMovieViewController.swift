@@ -14,7 +14,7 @@ import YoutubePlayer_in_WKWebView
 var xsrfCookie: HTTPCookie? = nil
 
 class RateMovieViewController: UIViewController, UIViewControllerTransitioningDelegate {
-
+    
     var divisor: CGFloat!
     var currentMovie: String = ""
     
@@ -55,7 +55,7 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
             print("cookie", cookie.value)
             if cookie.name == "csrftoken" { xsrfCookie = cookie
                 print("crsf", cookie.value)
-               // break
+                // break
             }
         }
         
@@ -117,14 +117,16 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
                                 switch response.result {
                                 case let .success(value):
                                     let jsonData = value as! NSDictionary
-                                    print("json", jsonData.value(forKey: "Poster")!)
-                                   // let imgLink = jsonData.value(forKey: "poster") as! NSArray
+                                    // let imgLink = jsonData.value(forKey: "poster") as! NSArray
                                     //let imgLinked = imgLink[0] as! NSDictionary
                                     //print("json api result", imgLinked.value(forKey: "original")!)
-                                    img.download(string: jsonData.value(forKey: "Poster") as! String)
+                                    if let imgLink = jsonData.value(forKey: "Poster") {
+                                        print("json", imgLink)
+                                        img.download(string: imgLink as! String)
+                                    }
                                     //self.popupImg.download(string: imgLinked.value(forKey: "original") as! String)
                                     //let data = jsonData[0] as! NSDictionary
-                                    //print("json", data.value(forKey: "Name")!)
+                                //print("json", data.value(forKey: "Name")!)
                                 case .failure(_):
                                     //error message in case of invalid credential
                                     label.text = "Error api google"
@@ -134,10 +136,10 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
                                     print("teaser", self.popupTeaser.text as! String)
                                 }
                                 if let yID = data.value(forKey: "yID") {
-                                   let id = yID as! String
+                                    let id = yID as! String
                                     print("id", id)
                                     self.popupYT.load(withVideoId: id)
-
+                                    
                                 }
                                 print("sizeB", self.popupStack.frame.height)
                                 self.popupView.updateContentView()
@@ -155,7 +157,7 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
         
     }
     
-
+    
     @IBAction func panCard(_ sender: UIPanGestureRecognizer) {
         generate_swipe(sender: sender, cardBis: self.cardBis, cardBisLabel: self.cardBisLabel, imgCardBis: self.imgCardBis)
     }
@@ -258,16 +260,26 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
         }
         
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    
+    @IBAction func logoutPressed(_ sender: Any) {
+        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+        UserDefaults.standard.synchronize()
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "X-CSRFToken": xsrfCookie!.value,
+            "Referer": "https://what-movie-today-for-ios.herokuapp.com/api/v1/movies/"
+        ]
+        AF.request("https://what-movie-today-for-ios.herokuapp.com/api/v1/rest-auth/logout/", method: .post, headers: headers).responseString { (response) in
+            print("response", response)
+        }
+        //switching to login screen
+        let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "ViewController") as! UIViewController
+        self.navigationController?.pushViewController(loginViewController, animated: true)
+        self.dismiss(animated: false, completion: nil)
     }
-    */
-
+    
 }
 
 import SDWebImage
