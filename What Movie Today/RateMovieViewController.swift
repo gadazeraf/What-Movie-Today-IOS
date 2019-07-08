@@ -11,11 +11,12 @@ import Alamofire
 import WebKit
 import YoutubePlayer_in_WKWebView
 
+var xsrfCookie: HTTPCookie? = nil
+
 class RateMovieViewController: UIViewController, UIViewControllerTransitioningDelegate {
 
     var divisor: CGFloat!
     var currentMovie: String = ""
-    var xsrfCookie: HTTPCookie? = nil
     
     @IBOutlet weak var imgCard: UIImageView!
     @IBOutlet weak var imgCardBis: UIImageView!
@@ -39,6 +40,10 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Mark - hide back button
+        let backButton = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: navigationController, action: nil)
+        navigationItem.leftBarButtonItem = backButton
+        
         divisor = (view.frame.width / 2) / 0.61
         calculateCard(label: cardLabel, img: imgCard)
         cardBis.alpha = 0
@@ -50,7 +55,7 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
             print("cookie", cookie.value)
             if cookie.name == "csrftoken" { xsrfCookie = cookie
                 print("crsf", cookie.value)
-                break
+               // break
             }
         }
     }
@@ -72,7 +77,7 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
                 case let .success(value):
                     let jsonData = value as! NSArray
                     print("json", jsonData[0])
-                    let data = jsonData[Int.random(in: 0 ... 100)] as! NSDictionary
+                    let data = jsonData[Int.random(in: 0 ... 51)] as! NSDictionary
                     print("json", data.value(forKey: "Name")!)
                     if let name = data.value(forKey: "Name") {
                         let nameb = name as? String ?? ""

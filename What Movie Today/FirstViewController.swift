@@ -44,7 +44,23 @@ class FirstViewController: UIViewController {
                 switch response.result {
                 case let .success(value):
                     let jsonData = value as! NSDictionary
-                    print("json", jsonData)
+                    print("jsonww", jsonData.value(forKey: "non_field_errors")!)
+                    //let jsond = jsonData[0] as! NSDictionary
+                    
+                    let test = ""
+                    if let weatherArray = jsonData as? [[String:Any]],
+                        let weather = weatherArray.first {
+                        print("weaether", weather["non_field_errors"]) // the value is an optional.
+                    }
+                    print("test", test)
+                    if test == "Unable to log in with provided credentials." {
+                        print("not log")
+                    }
+                    if test != "" {
+                        print("fuck")
+                    }
+                   // if jsonData.value(forKey: "non_field_errors") != nil {
+                        
                     //if there is no error
                     /*if(!(jsonData.value(forKey: "error") as! Bool)){
                         
@@ -64,14 +80,16 @@ class FirstViewController: UIViewController {
                         self.defaultValues.set(userPhone, forKey: "userphone")*/
                         
                         //switching the screen
-                        let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-                        self.navigationController?.pushViewController(profileViewController, animated: true)
+                        let RateMovieViewController = self.storyboard?.instantiateViewController(withIdentifier: "RateMovieViewController") as! RateMovieViewController
+                        self.navigationController?.pushViewController(RateMovieViewController, animated: true)
                         
                         self.dismiss(animated: false, completion: nil)
+                    
                    // }
                 case .failure(_):
                     //error message in case of invalid credential
-                    self.labelMessage.text = "Invalid username or password"
+                    //self.labelMessage.text = "Invalid username or password"
+                    print("error")
                 }
         }
     }
@@ -90,6 +108,11 @@ class FirstViewController: UIViewController {
             self.navigationController?.pushViewController(profileViewController, animated: true)
             
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
     }
     
     override func didReceiveMemoryWarning() {
