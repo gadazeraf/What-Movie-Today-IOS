@@ -66,7 +66,7 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
         view.addSubview(activityIndicator) // add it as a  subview
         activityIndicator.center = CGPoint(x: view.frame.size.width*0.5, y: view.frame.size.height*0.5) // put in the middle
         activityIndicator.startAnimating()
-        AF.request("http://127.0.0.1:8000/api/v1/newmovies/most", method: .get).responseJSON
+        AF.request("https://what-movie-today-for-ios.herokuapp.com/api/v1/newmovies/most", method: .get).responseJSON
             {
                 response in
                 //printing response
@@ -229,12 +229,13 @@ class RateMovieViewController: UIViewController, UIViewControllerTransitioningDe
         
         let headers: HTTPHeaders = [
             "Content-Type": "application/json",
-            "X-CSRFToken": xsrfCookie!.value
+            "X-CSRFToken": xsrfCookie!.value,
+            "Referer": "https://what-movie-today-for-ios.herokuapp.com/api/v1/movies/"
         ]
         
         print("token",headers["X-CSRFToken"]!)
         
-        AF.request("http://127.0.0.1:8000/api/v1/movies/", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseString { (response) in
+        AF.request("https://what-movie-today-for-ios.herokuapp.com/api/v1/movies/", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseString { (response) in
             print("response", response, String(data: response.request!.httpBody!, encoding: String.Encoding.utf8))
         }
         

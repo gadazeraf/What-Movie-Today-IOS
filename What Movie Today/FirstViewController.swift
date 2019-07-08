@@ -13,7 +13,7 @@ class FirstViewController: UIViewController {
 
     //The login script url make sure to write the ip instead of localhost
     //you can get the ip using ifconfig command in terminal
-    let URL_USER_LOGIN = "http://127.0.0.1:8000/api/v1/rest-auth/login/"
+    let URL_USER_LOGIN = "https://what-movie-today-for-ios.herokuapp.com/api/v1/rest-auth/login/"
     
     //the defaultvalues to store user data
     let defaultValues = UserDefaults.standard
@@ -44,7 +44,7 @@ class FirstViewController: UIViewController {
                 switch response.result {
                 case let .success(value):
                     let jsonData = value as! NSDictionary
-                    print("jsonww", jsonData.value(forKey: "non_field_errors")!)
+                    //print("jsonww", jsonData.value(forKey: "non_field_errors")!)
                     //let jsond = jsonData[0] as! NSDictionary
                     
                     let test = ""
