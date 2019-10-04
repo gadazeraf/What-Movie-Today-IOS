@@ -31,7 +31,7 @@ class SignUpViewController: UIViewController {
         
         let headers: HTTPHeaders = [
             "Content-Type": "application/json",
-            "X-CSRFToken": cxsrfCookie!.value,
+            "X-CSRFToken": cxsrfCookie?.value ?? "",
             "Referer": "https://what-movie-today-for-ios.herokuapp.com/api/v1/rest-auth/registration"
         ]
         
